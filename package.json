@@ -1,13 +1,13 @@
 {
 	"name": "business-manage-web",
-	"version": "0.0.2",
+	"version": "0.0.3",
 	"description": "vue3 vite next admin template",
 	"author": "lyt_20201208",
 	"license": "MIT",
 	"scripts": {
 		"dev": "vite --force",
 		"build": "vite build",
-        "release":"bash ./scripts/release.sh",
+		"release": "bash ./scripts/release.sh",
 		"lint-fix": "eslint --fix --ext .js --ext .jsx --ext .vue src/"
 	},
 	"dependencies": {
