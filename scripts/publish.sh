@@ -14,7 +14,7 @@ git push origin "origin/${current_branch_name}"
 
 image_name="imchrisorz/business-manage-web"
 
-docker build -t "${image_name}:${ver}" .
+docker build -t "${image_name}:${ver}" -f docker/Dockerfile .
 
 docker tag "${image_name}:${ver}" "${image_name}:latest"
 
