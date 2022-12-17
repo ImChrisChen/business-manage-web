@@ -2,7 +2,7 @@ FROM node:lts-slim as webstatic
 
 WORKDIR /app
 
-COPY ../package.json pnpm-lock.yaml ./
+COPY ./package.json pnpm-lock.yaml ./
 
 RUN npx pnpm install
 
