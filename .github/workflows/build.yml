@@ -14,7 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     steps: 
       - name: Checkout
-        users: actions/checkout@2.6.0
+        uses: actions/checkout@2.6.0
         with:
           persist-credentials: false
 
