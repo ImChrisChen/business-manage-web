@@ -1,0 +1,26 @@
+name: "business-manage-web Project Build"
+
+on: 
+  push: 
+    branches: 
+      - main
+  pull_request: 
+    branches: 
+      - main
+
+
+jobs: 
+  build: 
+    runs-on: ubuntu-latest
+    steps: 
+      - name: Checkout
+        users: actions/checkout@2.6.0
+        with:
+          persist-credentials: false
+
+      - name: Install And Build
+        run: |
+          npx pnpm install
+          npm run build
+          pwd
+          ls -al
