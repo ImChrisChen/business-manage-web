@@ -24,3 +24,7 @@ jobs:
           npm run build
           pwd
           ls -al
+
+      - name: Build Docker Image
+        run: | 
+          bash ./scripts/release.sh

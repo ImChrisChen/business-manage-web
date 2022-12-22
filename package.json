@@ -2,7 +2,7 @@
 	"name": "business-manage-web",
 	"version": "0.0.3",
 	"description": "vue3 vite next admin template",
-	"author": "lyt_20201208",
+	"author": "chrisorz",
 	"license": "MIT",
 	"scripts": {
 		"dev": "vite --force",

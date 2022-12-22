@@ -1,4 +1,4 @@
-import request from '/@/utils/request';
+import request, { HttpResponse } from '/@/utils/request';
 
 /**
  * （不建议写成 request.post(xxx)，因为这样 post 时，无法 params 与 data 同时传参）
@@ -9,16 +9,16 @@ import request from '/@/utils/request';
  */
 export function useLoginApi() {
 	return {
-		signIn: (data: object) => {
+		signIn: (data: { username: string; password: string }): Promise<HttpResponse> => {
 			return request({
-				url: '/user/signIn',
+				url: '/api/v1/login',
 				method: 'post',
 				data,
 			});
 		},
-		signOut: (data: object) => {
+		signOut: (data: object): Promise<HttpResponse> => {
 			return request({
-				url: '/user/signOut',
+				url: '/api/v1/logout',
 				method: 'post',
 				data,
 			});

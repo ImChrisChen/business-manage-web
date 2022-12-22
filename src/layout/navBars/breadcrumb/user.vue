@@ -59,8 +59,10 @@
 		</div>
 		<el-dropdown :show-timeout="70" :hide-timeout="50" @command="onHandleCommandClick">
 			<span class="layout-navbars-breadcrumb-user-link">
-				<img :src="userInfos.photo" class="layout-navbars-breadcrumb-user-link-photo mr5" />
-				{{ userInfos.userName === '' ? 'common' : userInfos.userName }}
+<!--				<img :src="userInfos.photo" class="layout-navbars-breadcrumb-user-link-photo mr5" />-->
+<!--				{{ userInfos.userName === '' ? 'common' : userInfos.userName }}-->
+				<img :src="userInfo.avatar" class="layout-navbars-breadcrumb-user-link-photo mr5" />
+				{{ userInfo.username || userInfo.email }}
 				<el-icon class="el-icon--right">
 					<ele-ArrowDown />
 				</el-icon>
@@ -87,11 +89,12 @@ import { ElMessageBox, ElMessage } from 'element-plus';
 import screenfull from 'screenfull';
 import { useI18n } from 'vue-i18n';
 import { storeToRefs } from 'pinia';
-import { useUserInfo } from '/@/stores/userInfo';
+// import { useUserInfo } from '/@/stores/userInfo';
 import { useThemeConfig } from '/@/stores/themeConfig';
 import other from '/@/utils/other';
 import mittBus from '/@/utils/mitt';
 import { Session, Local } from '/@/utils/storage';
+import {useUserStore} from "/@/stores/user.store";
 
 // 引入组件
 const UserNews = defineAsyncComponent(() => import('/@/layout/navBars/breadcrumb/userNews.vue'));
@@ -100,9 +103,14 @@ const Search = defineAsyncComponent(() => import('/@/layout/navBars/breadcrumb/s
 // 定义变量内容
 const { locale, t } = useI18n();
 const router = useRouter();
-const stores = useUserInfo();
+// const stores = useUserInfo();
 const storesThemeConfig = useThemeConfig();
-const { userInfos } = storeToRefs(stores);
+// const { userInfos } = storeToRefs(stores);
+// const {userInfo} = storeToRefs()
+
+const userStore = useUserStore()
+const {userInfo} = storeToRefs(userStore)
+
 const { themeConfig } = storeToRefs(storesThemeConfig);
 const searchRef = ref();
 const state = reactive({

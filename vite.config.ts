@@ -26,14 +26,19 @@ const viteConfig = defineConfig((mode: ConfigEnv) => {
 			host: '0.0.0.0',
 			port: env.VITE_PORT as unknown as number,
 			open: env.VITE_OPEN,
-			hmr: true,
+			// hmr: true,
 			proxy: {
 				'/gitee': {
 					target: 'https://gitee.com',
-					ws: true,
+					// ws: true,
 					changeOrigin: true,
 					rewrite: (path) => path.replace(/^\/gitee/, ''),
 				},
+				'/api': {
+					target: 'http://127.0.0.1:3003',
+					changeOrigin: true,
+					rewrite: (path) => path.replace(/^\/api/, '/api')
+				}
 			},
 		},
 		build: {

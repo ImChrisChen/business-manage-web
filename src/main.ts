@@ -16,4 +16,9 @@ const app = createApp(App);
 directive(app);
 other.elSvg(app);
 
-app.use(pinia).use(router).use(ElementPlus, { i18n: i18n.global.t }).use(i18n).use(VueGridLayout).mount('#app');
+app.use(pinia);
+app.use(router);
+app.use(ElementPlus, { i18n: i18n.global.t });
+app.use(i18n);
+app.use(VueGridLayout);
+app.mount('#app');
