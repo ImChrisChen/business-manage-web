@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-source "./update_version_push.sh"
+source "./scripts/update_version_push.sh"
 
 image_name="imchrisorz/business-manage-web"
 
