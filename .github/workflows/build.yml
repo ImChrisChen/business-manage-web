@@ -33,9 +33,9 @@ jobs:
           
           rm -rf ./git
           git init
-          git remote add origin https://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@github.com/ImChrisChen/business-manage-web.git
           git config --global user.email "imchrisorz@gmail.com"
           git config --global user.name "imchrisorz"
+          git remote add origin https://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@github.com/ImChrisChen/business-manage-web.git
           git commit -a -m "ci: 版本发布,当前版本:${ver}"
           git push origin master
 
