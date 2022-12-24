@@ -1,23 +1,21 @@
 name: "business-manage-web Project Build"
 
-on: 
-  push: 
-    branches: 
+on:
+  push:
+    branches:
       - main
-  pull_request: 
-    branches: 
+  pull_request:
+    branches:
       - main
 
-
-jobs: 
-  build: 
+jobs:
+  build:
     runs-on: ubuntu-latest
-    steps: 
+    steps:
       - name: Checkout
         uses: actions/checkout@v2.6.0
         with:
           persist-credentials: false
-
       - name: Install And Build
         run: |
           npx pnpm install
@@ -38,17 +36,13 @@ jobs:
           git config --local user.email "imchrisorz@gmail.com"
           git config --local user.name "github_ci_bot"
           git commit -a -m "ci: 版本发布,当前版本:${ver}"
-#          git tag -d "v${ver}"
-#          git tag "v${ver}"
           git push origin master
-          
 
       - name: Login to Docker Hub
         uses: docker/login-action@v2
         with:
           username: imchrisorz
           password: dckr_pat_UUoUPBvOuTi1_RQWsjdbqSUiZOA
-
       - name: Build Docker Image And Push Image
-        run: | 
+        run: |
           bash ./scripts/release.sh
