@@ -18,6 +18,26 @@ jobs:
         with:
           persist-credentials: false
 
+      - name: Update Project Version
+        run: |
+          git config --local user.email "imchrisorz@gmail.com"
+          git config --local user.name "github_ci_bot"
+          
+          current_branch_name=$(git symbolic-ref --short HEAD)
+          npm version patch
+          ver=$(cat ./package.json | grep -e '"version":' | tr -cd "[0-9].")
+          git add .
+          git commit -m "ci: 版本发布,当前版本:${ver}"
+          git tag -a "v${ver}" -m "v${ver}"
+      #          git push origin "origin/${current_branch_name}"
+
+      - name: Push Changes
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{secrets.GITHUB_TOKEN}}
+          branch: ${{ github.head_ref }}
+          tags: true
+
       - name: Install And Build
         run: |
           npx pnpm install
@@ -31,6 +51,6 @@ jobs:
           username: imchrisorz
           password: dckr_pat_UUoUPBvOuTi1_RQWsjdbqSUiZOA
 
-      - name: Build Docker Image
+      - name: Build Docker Image And Push Image
         run: | 
           bash ./scripts/release.sh
