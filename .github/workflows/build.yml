@@ -25,12 +25,13 @@ jobs:
 
       - name: Update Project Version
         run: |
+          git config --global user.email "imchrisorz@gmail.com"
+          git config --global user.name "imchrisorz"
+          
           npm version patch
           ver=$(cat ./package.json | grep -e '"version":' | tr -cd "[0-9].")
           echo "${{ secrets.ACCESS_TOKEN }}"
           
-          git config --global user.email "imchrisorz@gmail.com"
-          git config --global user.name "imchrisorz"
           git add .
           git commit -m "ci: 版本发布,当前版本:${ver}"
           git push origin master
