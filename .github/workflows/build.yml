@@ -25,6 +25,9 @@ jobs:
 
       - name: Update Project Version
         run: |
+          git init
+          git add .
+          git commit -m "Initial commit"
           git config --global user.email "imchrisorz@gmail.com"
           git config --global user.name "imchrisorz"
           
