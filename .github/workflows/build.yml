@@ -42,12 +42,14 @@ jobs:
           git config --global user.email "imchrisorz@gmail.com"
           git config --global user.name "imchrisorz"
                
-          npm version patch
-          ver=$(cat ./package.json | grep -e '"version":' | tr -cd "[0-9].")
-          echo "${{ secrets.ACCESS_TOKEN }}"
+          # npm version patch
+          # ver=$(cat ./package.json | grep -e '"version":' | tr -cd "[0-9].")
+          # echo "${{ secrets.ACCESS_TOKEN }}"
+          touch 1.txt
+          echo "100" >> 1.txt
           
           git add .
-          git commit -m "ci: 版本发布,当前版本:${ver}"
+          git commit -m "ci: 版本发布,当前版本"
           git status
           git --no-pager log
           echo "https://${GITHUB_TOKEN}@github.com/ImChrisChen/business-manage-web.git"
