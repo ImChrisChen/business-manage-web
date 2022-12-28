@@ -32,6 +32,13 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
         run: |
+          ls -al
+          git status
+          git --no-pager log
+          echo "https://${GITHUB_TOKEN}@github.com/ImChrisChen/business-manage-web.git"
+          cat ./package.json
+          pwd
+
           git config --global user.email "imchrisorz@gmail.com"
           git config --global user.name "imchrisorz"
                
