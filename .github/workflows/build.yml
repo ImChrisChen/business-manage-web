@@ -44,6 +44,8 @@ jobs:
           git status
           git --no-pager log
           echo "https://${GITHUB_TOKEN}@github.com/ImChrisChen/business-manage-web.git"
+          cat ./package.json
+          pwd
           
           git push https://${GITHUB_TOKEN}@github.com/ImChrisChen/business-manage-web.git main
 
