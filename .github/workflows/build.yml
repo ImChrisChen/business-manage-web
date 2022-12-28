@@ -41,6 +41,10 @@ jobs:
           
           git add .
           git commit -m "ci: 版本发布,当前版本:${ver}"
+          git status
+          git --no-pager log
+          echo "https://${GITHUB_TOKEN}@github.com/ImChrisChen/business-manage-web.git"
+          
           git push https://${GITHUB_TOKEN}@github.com/ImChrisChen/business-manage-web.git main
 
       - name: Login to Docker Hub
