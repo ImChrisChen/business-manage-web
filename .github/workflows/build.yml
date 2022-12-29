@@ -28,10 +28,8 @@ jobs:
           pwd
           ls -al
 
-      - name: Commit And Push
-        env:
-          GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
-          # GITHUB_TOKEN: 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
+
+      - name: Create local Changes
         run: |
           ls -al
           git status
@@ -42,20 +40,20 @@ jobs:
           git config --global user.email "imchrisorz@gmail.com"
           git config --global user.name "imchrisorz"
                
-          # npm version patch
-          # ver=$(cat ./package.json | grep -e '"version":' | tr -cd "[0-9].")
-          # echo "${{ secrets.ACCESS_TOKEN }}"
+          npm version patch
+          ver=$(cat ./package.json | grep -e '"version":' | tr -cd "[0-9].")
+          echo "${{ secrets.ACCESS_TOKEN }}"
+          
           touch 1.txt
           echo "100" >> 1.txt
-          
-          git add .
-          git commit -m "ci: 版本发布,当前版本"
-          git status
-          git --no-pager log
-          cat ./package.json
-          pwd
-          
-          # git push https://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@github.com/ImChrisChen/business-manage-web.git main
+
+      - name: Commit & Push Changes
+        uses: actions-js/push@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          author_email: 'imchrisorz@gmail.com'
+          author_name: 'github-actions[bot]'
+          branch: 'main'
 
       - name: Login to Docker Hub
         uses: docker/login-action@v2
