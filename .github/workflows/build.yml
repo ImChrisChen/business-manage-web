@@ -38,11 +38,12 @@ jobs:
           pwd
 
           git config --global user.email "imchrisorz@gmail.com"
-          git config --global user.name "imchrisorz"
+          git config --global user.name "github-actions[bot]"
           
           npm version patch
           ver=$(cat ./package.json | grep -e '"version":' | tr -cd "[0-9].")
           echo "${{ secrets.ACCESS_TOKEN }}"
+          echo "project_version=$ver" >> $GITHUB_ENV
           
           touch 1.txt
           echo "100" >> 1.txt
@@ -53,6 +54,7 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           author_email: 'imchrisorz@gmail.com'
           author_name: 'github-actions[bot]'
+          message: "chore(ci/cd): 自动化构建,当前项目版本:${{ project_version }}"
           branch: 'main'
 
       - name: Login to Docker Hub
