@@ -31,6 +31,15 @@ jobs:
 
       - name: Create local Changes
         run: |
+          ls -al
+          git status
+          git --no-pager log
+          cat ./package.json
+          pwd
+
+          git config --global user.email "imchrisorz@gmail.com"
+          git config --global user.name "github-actions[bot-1]"
+
           npm version patch
           ver=$(cat ./package.json | grep -e '"version":' | tr -cd "[0-9].")
           echo "::set-env name=project_version::$ver"
@@ -39,8 +48,6 @@ jobs:
         uses: actions-js/push@master
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          author_email: 'imchrisorz@gmail.com'
-          author_name: 'github-actions[bot]'
           message: "chore: 自动化构建,当前版本: ${{env.project_version}}"
           branch: 'main'
 
