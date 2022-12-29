@@ -51,6 +51,7 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           author_email: 'imchrisorz@gmail.com'
           author_name: 'github-actions[bot]'
+          amend: true
           message: "chore(ci/cd): 自动化构建,当前项目版本:${{ env.project_version }}"
           branch: 'main'
 
