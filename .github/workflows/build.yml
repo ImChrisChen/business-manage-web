@@ -45,9 +45,6 @@ jobs:
           echo "${{ secrets.ACCESS_TOKEN }}"
           echo "project_version=$ver" >> $GITHUB_ENV
           
-          touch 1.txt
-          echo "100" >> 1.txt
-
       - name: Commit & Push Changes
         uses: actions-js/push@master
         with:
