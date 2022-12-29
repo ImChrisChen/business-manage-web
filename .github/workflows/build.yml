@@ -38,21 +38,22 @@ jobs:
           pwd
 
           git config --global user.email "imchrisorz@gmail.com"
-          git config --global user.name "github-actions[bot-1]"
-
+          git config --global user.name "imchrisorz"
+          
           npm version patch
           ver=$(cat ./package.json | grep -e '"version":' | tr -cd "[0-9].")
-          echo "project_version=$ver" >> $GITHUB_ENV
+          echo "${{ secrets.ACCESS_TOKEN }}"
+          
+          touch 1.txt
+          echo "100" >> 1.txt
 
       - name: Commit & Push Changes
         uses: actions-js/push@master
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           author_email: 'imchrisorz@gmail.com'
-          author_name: 'github-actions[bot-2]'
-          # message: "chore: 自动化构建,当前版本: ${{ env.project_version }}"
+          author_name: 'github-actions[bot]'
           branch: 'main'
-          # tags: true
 
       - name: Login to Docker Hub
         uses: docker/login-action@v2
