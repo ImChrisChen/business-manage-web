@@ -2,25 +2,25 @@
 	<div class="system-dic-dialog-container">
 		<el-dialog :title="state.dialog.title" v-model="state.dialog.isShowDialog" width="769px">
 			<el-alert title="半成品，交互过于复杂，请自行扩展！" type="warning" :closable="false" class="mb20"> </el-alert>
-			<el-form ref="dicDialogFormRef" :model="state.ruleForm" size="default" label-width="90px">
+			<el-form ref="dicDialogFormRef" :model="state.formData" size="default" label-width="90px">
 				<el-row :gutter="35">
 					<el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12" class="mb20">
 						<el-form-item label="字典名称">
-							<el-input v-model="state.ruleForm.dicName" placeholder="请输入字典名称" clearable></el-input>
+							<el-input v-model="state.formData.dicName" placeholder="请输入字典名称" clearable></el-input>
 						</el-form-item>
 					</el-col>
 					<el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12" class="mb20">
 						<el-form-item label="字段名">
-							<el-input v-model="state.ruleForm.fieldName" placeholder="请输入字段名，拼接 ruleForm.list" clearable></el-input>
+							<el-input v-model="state.formData.fieldName" placeholder="请输入字段名，拼接 ruleForm.list" clearable></el-input>
 						</el-form-item>
 					</el-col>
 					<el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24" class="mb20">
 						<el-form-item label="字典状态">
-							<el-switch v-model="state.ruleForm.status" inline-prompt active-text="启" inactive-text="禁"></el-switch>
+							<el-switch v-model="state.formData.status" inline-prompt active-text="启" inactive-text="禁"></el-switch>
 						</el-form-item>
 					</el-col>
 					<el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24" class="mb20">
-						<el-row :gutter="35" v-for="(v, k) in state.ruleForm.list" :key="k">
+						<el-row :gutter="35" v-for="(v, k) in state.formData.list" :key="k">
 							<el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12" class="mb20">
 								<el-form-item :prop="`list[${k}].label`">
 									<template #label>
@@ -48,7 +48,7 @@
 					</el-col>
 					<el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24" class="mb20">
 						<el-form-item label="字典描述">
-							<el-input v-model="state.ruleForm.describe" type="textarea" placeholder="请输入字典描述" maxlength="150"></el-input>
+							<el-input v-model="state.formData.describe" type="textarea" placeholder="请输入字典描述" maxlength="150"></el-input>
 						</el-form-item>
 					</el-col>
 				</el-row>
@@ -72,7 +72,7 @@ const emit = defineEmits(['refresh']);
 // 定义变量内容
 const dicDialogFormRef = ref();
 const state = reactive({
-	ruleForm: {
+	formData: {
 		dicName: '', // 字典名称
 		fieldName: '', // 字段名
 		status: true, // 字典状态
@@ -103,7 +103,7 @@ const openDialog = (type: string, row: RowDicType) => {
 				{ id: Math.random(), label: 'roleName', value: '普通用户' },
 			];
 		}
-		state.ruleForm = row;
+		state.formData = row;
 		state.dialog.title = '修改字典';
 		state.dialog.submitTxt = '修 改';
 	} else {
@@ -132,7 +132,7 @@ const onSubmit = () => {
 };
 // 新增行
 const onAddRow = () => {
-	state.ruleForm.list.push({
+	state.formData.list.push({
 		id: Math.random(),
 		label: '',
 		value: '',
@@ -140,7 +140,7 @@ const onAddRow = () => {
 };
 // 删除行
 const onDelRow = (k: number) => {
-	state.ruleForm.list.splice(k, 1);
+	state.formData.list.splice(k, 1);
 };
 
 // 暴露变量

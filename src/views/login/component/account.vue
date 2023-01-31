@@ -1,7 +1,7 @@
 <template>
-  <el-form size="large" class="login-content-form">
-    <el-form-item class="login-animation1">
-      <el-input text :placeholder="$t('message.account.accountPlaceholder1')" v-model="state.ruleForm.userName"
+  <el-form size="large" class="login-content-form" :rules="state.formRules" :model="state.formData">
+    <el-form-item class="login-animation1" prop="userName">
+      <el-input text :placeholder="$t('message.account.accountPlaceholder1')" v-model="state.formData.userName"
                 clearable autocomplete="off">
         <template #prefix>
           <el-icon class="el-input__icon">
@@ -10,11 +10,11 @@
         </template>
       </el-input>
     </el-form-item>
-    <el-form-item class="login-animation2">
+    <el-form-item class="login-animation2" prop="password">
       <el-input
           :type="state.isShowPassword ? 'text' : 'password'"
           :placeholder="$t('message.account.accountPlaceholder2')"
-          v-model="state.ruleForm.password"
+          v-model="state.formData.password"
           autocomplete="off"
       >
         <template #prefix>
@@ -32,13 +32,13 @@
         </template>
       </el-input>
     </el-form-item>
-    <el-form-item class="login-animation3">
+    <el-form-item class="login-animation3" prop="code">
       <el-col :span="15">
         <el-input
             text
             maxlength="4"
             :placeholder="$t('message.account.accountPlaceholder3')"
-            v-model="state.ruleForm.code"
+            v-model="state.formData.code"
             clearable
             autocomplete="off"
         >
@@ -66,7 +66,7 @@
 <script setup lang="ts" name="loginAccount">
 import {reactive, computed} from 'vue';
 import {useRoute, useRouter} from 'vue-router';
-import {ElMessage} from 'element-plus';
+import {ElMessage, FormRules} from 'element-plus';
 import {useI18n} from 'vue-i18n';
 import {storeToRefs} from 'pinia';
 import {useThemeConfig} from '/@/stores/themeConfig';
@@ -87,17 +87,42 @@ const route = useRoute();
 const router = useRouter();
 const state = reactive({
   isShowPassword: false,
-  ruleForm: {
+    formRules: {
+      userName: [
+          {
+              required: true,
+              type: 'string',
+              trigger: 'change',
+              message: '请输入用户名称'
+          },
+      ],
+        password: [
+            {
+                required: true,
+                type: 'string',
+                trigger: 'change',
+                message: '请输入密码'
+            }
+        ],
+        code: [
+            {
+                required: true,
+                type: "string",
+                trigger: 'change',
+                message: '请输入验证码',
+            },
+        ]
+    } as FormRules,
+  formData: {
     userName: 'admin',
     password: '123456',
-    code: '1234',
+    code: 1234,
   },
   loading: {
     signIn: false,
   },
 });
 const userStore = useUserStore()
-
 // 时间获取
 const currentTime = computed(() => {
   return formatAxis(new Date());
@@ -108,8 +133,8 @@ const onSignIn = async () => {
 
   const {signIn} = useLoginApi()
   const res = await signIn({
-    username: state.ruleForm.userName,
-    password: state.ruleForm.password
+    username: state.formData.userName,
+    password: state.formData.password
   }).finally(() => {
     state.loading.signIn = false
   })

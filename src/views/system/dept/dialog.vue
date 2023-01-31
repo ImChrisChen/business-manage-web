@@ -1,7 +1,7 @@
 <template>
 	<div class="system-dept-dialog-container">
 		<el-dialog :title="state.dialog.title" v-model="state.dialog.isShowDialog" width="769px">
-			<el-form ref="deptDialogFormRef" :model="state.ruleForm" size="default" label-width="90px">
+			<el-form ref="deptDialogFormRef" :model="state.formData" size="default" label-width="90px">
 				<el-row :gutter="35">
 					<el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24" class="mb20">
 						<el-form-item label="上级部门">
@@ -11,7 +11,7 @@
 								placeholder="请选择部门"
 								clearable
 								class="w100"
-								v-model="state.ruleForm.deptLevel"
+								v-model="state.formData.deptLevel"
 							>
 								<template #default="{ node, data }">
 									<span>{{ data.deptName }}</span>
@@ -22,37 +22,37 @@
 					</el-col>
 					<el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12" class="mb20">
 						<el-form-item label="部门名称">
-							<el-input v-model="state.ruleForm.deptName" placeholder="请输入部门名称" clearable></el-input>
+							<el-input v-model="state.formData.deptName" placeholder="请输入部门名称" clearable></el-input>
 						</el-form-item>
 					</el-col>
 					<el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12" class="mb20">
 						<el-form-item label="负责人">
-							<el-input v-model="state.ruleForm.person" placeholder="请输入负责人" clearable></el-input>
+							<el-input v-model="state.formData.person" placeholder="请输入负责人" clearable></el-input>
 						</el-form-item>
 					</el-col>
 					<el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12" class="mb20">
 						<el-form-item label="手机号">
-							<el-input v-model="state.ruleForm.phone" placeholder="请输入手机号" clearable></el-input>
+							<el-input v-model="state.formData.phone" placeholder="请输入手机号" clearable></el-input>
 						</el-form-item>
 					</el-col>
 					<el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12" class="mb20">
 						<el-form-item label="邮箱">
-							<el-input v-model="state.ruleForm.email" placeholder="请输入" clearable></el-input>
+							<el-input v-model="state.formData.email" placeholder="请输入" clearable></el-input>
 						</el-form-item>
 					</el-col>
 					<el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12" class="mb20">
 						<el-form-item label="排序">
-							<el-input-number v-model="state.ruleForm.sort" :min="0" :max="999" controls-position="right" placeholder="请输入排序" class="w100" />
+							<el-input-number v-model="state.formData.sort" :min="0" :max="999" controls-position="right" placeholder="请输入排序" class="w100" />
 						</el-form-item>
 					</el-col>
 					<el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12" class="mb20">
 						<el-form-item label="部门状态">
-							<el-switch v-model="state.ruleForm.status" inline-prompt active-text="启" inactive-text="禁"></el-switch>
+							<el-switch v-model="state.formData.status" inline-prompt active-text="启" inactive-text="禁"></el-switch>
 						</el-form-item>
 					</el-col>
 					<el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24" class="mb20">
 						<el-form-item label="部门描述">
-							<el-input v-model="state.ruleForm.describe" type="textarea" placeholder="请输入部门描述" maxlength="150"></el-input>
+							<el-input v-model="state.formData.describe" type="textarea" placeholder="请输入部门描述" maxlength="150"></el-input>
 						</el-form-item>
 					</el-col>
 				</el-row>
@@ -76,7 +76,7 @@ const emit = defineEmits(['refresh']);
 // 定义变量内容
 const deptDialogFormRef = ref();
 const state = reactive({
-	ruleForm: {
+	formData: {
 		deptLevel: [] as string[], // 上级部门
 		deptName: '', // 部门名称
 		person: '', // 负责人
@@ -102,7 +102,7 @@ const openDialog = (type: string, row: RowDeptType) => {
 		row.person = 'lyt';
 		row.phone = '12345678910';
 		row.email = 'vueNextAdmin@123.com';
-		state.ruleForm = row;
+		state.formData = row;
 		state.dialog.title = '修改部门';
 		state.dialog.submitTxt = '修 改';
 	} else {

@@ -1,7 +1,7 @@
 <template>
 	<el-form size="large" class="login-content-form">
 		<el-form-item class="login-animation1">
-			<el-input text :placeholder="$t('message.mobile.placeholder1')" v-model="state.ruleForm.userName" clearable autocomplete="off">
+			<el-input text :placeholder="$t('message.mobile.placeholder1')" v-model="state.formData.userName" clearable autocomplete="off">
 				<template #prefix>
 					<i class="iconfont icon-dianhua el-input__icon"></i>
 				</template>
@@ -9,7 +9,7 @@
 		</el-form-item>
 		<el-form-item class="login-animation2">
 			<el-col :span="15">
-				<el-input text maxlength="4" :placeholder="$t('message.mobile.placeholder2')" v-model="state.ruleForm.code" clearable autocomplete="off">
+				<el-input text maxlength="4" :placeholder="$t('message.mobile.placeholder2')" v-model="state.formData.code" clearable autocomplete="off">
 					<template #prefix>
 						<el-icon class="el-input__icon"><ele-Position /></el-icon>
 					</template>
@@ -34,7 +34,7 @@ import { reactive } from 'vue';
 
 // 定义变量内容
 const state = reactive({
-	ruleForm: {
+	formData: {
 		userName: '',
 		code: '',
 	},

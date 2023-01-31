@@ -1,7 +1,7 @@
 <template>
 	<div class="system-menu-dialog-container">
 		<el-dialog :title="state.dialog.title" v-model="state.dialog.isShowDialog" width="769px">
-			<el-form ref="menuDialogFormRef" :model="state.ruleForm" size="default" label-width="80px">
+			<el-form ref="menuDialogFormRef" :model="state.formData" size="default" label-width="80px">
 				<el-row :gutter="35">
 					<el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24" class="mb20">
 						<el-form-item label="上级菜单">
@@ -11,7 +11,7 @@
 								placeholder="请选择上级菜单"
 								clearable
 								class="w100"
-								v-model="state.ruleForm.menuSuperior"
+								v-model="state.formData.menuSuperior"
 							>
 								<template #default="{ node, data }">
 									<span>{{ data.title }}</span>
@@ -22,7 +22,7 @@
 					</el-col>
 					<el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24" class="mb20">
 						<el-form-item label="菜单类型">
-							<el-radio-group v-model="state.ruleForm.menuType">
+							<el-radio-group v-model="state.formData.menuType">
 								<el-radio label="menu">菜单</el-radio>
 								<el-radio label="btn">按钮</el-radio>
 							</el-radio-group>
@@ -30,71 +30,71 @@
 					</el-col>
 					<el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12" class="mb20">
 						<el-form-item label="菜单名称">
-							<el-input v-model="state.ruleForm.meta.title" placeholder="格式：message.router.xxx" clearable></el-input>
+							<el-input v-model="state.formData.meta.title" placeholder="格式：message.router.xxx" clearable></el-input>
 						</el-form-item>
 					</el-col>
-					<template v-if="state.ruleForm.menuType === 'menu'">
+					<template v-if="state.formData.menuType === 'menu'">
 						<el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12" class="mb20">
 							<el-form-item label="路由名称">
-								<el-input v-model="state.ruleForm.name" placeholder="路由中的 name 值" clearable></el-input>
+								<el-input v-model="state.formData.name" placeholder="路由中的 name 值" clearable></el-input>
 							</el-form-item>
 						</el-col>
 						<el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12" class="mb20">
 							<el-form-item label="路由路径">
-								<el-input v-model="state.ruleForm.path" placeholder="路由中的 path 值" clearable></el-input>
+								<el-input v-model="state.formData.path" placeholder="路由中的 path 值" clearable></el-input>
 							</el-form-item>
 						</el-col>
 						<el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12" class="mb20">
 							<el-form-item label="重定向">
-								<el-input v-model="state.ruleForm.redirect" placeholder="请输入路由重定向" clearable></el-input>
+								<el-input v-model="state.formData.redirect" placeholder="请输入路由重定向" clearable></el-input>
 							</el-form-item>
 						</el-col>
 						<el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12" class="mb20">
 							<el-form-item label="菜单图标">
-								<IconSelector placeholder="请输入菜单图标" v-model="state.ruleForm.meta.icon" />
+								<IconSelector placeholder="请输入菜单图标" v-model="state.formData.meta.icon" />
 							</el-form-item>
 						</el-col>
 						<el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12" class="mb20">
 							<el-form-item label="组件路径">
-								<el-input v-model="state.ruleForm.component" placeholder="组件路径" clearable></el-input>
+								<el-input v-model="state.formData.component" placeholder="组件路径" clearable></el-input>
 							</el-form-item>
 						</el-col>
 						<el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12" class="mb20">
 							<el-form-item label="链接地址">
 								<el-input
-									v-model="state.ruleForm.meta.isLink"
+									v-model="state.formData.meta.isLink"
 									placeholder="外链/内嵌时链接地址（http:xxx.com）"
 									clearable
-									:disabled="!state.ruleForm.isLink"
+									:disabled="!state.formData.isLink"
 								>
 								</el-input>
 							</el-form-item>
 						</el-col>
 						<el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12" class="mb20">
 							<el-form-item label="权限标识">
-								<el-select v-model="state.ruleForm.meta.roles" multiple placeholder="取角色管理" clearable class="w100">
+								<el-select v-model="state.formData.meta.roles" multiple placeholder="取角色管理" clearable class="w100">
 									<el-option label="admin" value="admin"></el-option>
 									<el-option label="common" value="common"></el-option>
 								</el-select>
 							</el-form-item>
 						</el-col>
 					</template>
-					<template v-if="state.ruleForm.menuType === 'btn'">
+					<template v-if="state.formData.menuType === 'btn'">
 						<el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12" class="mb20">
 							<el-form-item label="权限标识">
-								<el-input v-model="state.ruleForm.btnPower" placeholder="请输入权限标识" clearable></el-input>
+								<el-input v-model="state.formData.btnPower" placeholder="请输入权限标识" clearable></el-input>
 							</el-form-item>
 						</el-col>
 					</template>
 					<el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12" class="mb20">
 						<el-form-item label="菜单排序">
-							<el-input-number v-model="state.ruleForm.menuSort" controls-position="right" placeholder="请输入排序" class="w100" />
+							<el-input-number v-model="state.formData.menuSort" controls-position="right" placeholder="请输入排序" class="w100" />
 						</el-form-item>
 					</el-col>
-					<template v-if="state.ruleForm.menuType === 'menu'">
+					<template v-if="state.formData.menuType === 'menu'">
 						<el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12" class="mb20">
 							<el-form-item label="是否隐藏">
-								<el-radio-group v-model="state.ruleForm.meta.isHide">
+								<el-radio-group v-model="state.formData.meta.isHide">
 									<el-radio :label="true">隐藏</el-radio>
 									<el-radio :label="false">不隐藏</el-radio>
 								</el-radio-group>
@@ -102,7 +102,7 @@
 						</el-col>
 						<el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12" class="mb20">
 							<el-form-item label="页面缓存">
-								<el-radio-group v-model="state.ruleForm.meta.isKeepAlive">
+								<el-radio-group v-model="state.formData.meta.isKeepAlive">
 									<el-radio :label="true">缓存</el-radio>
 									<el-radio :label="false">不缓存</el-radio>
 								</el-radio-group>
@@ -110,7 +110,7 @@
 						</el-col>
 						<el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12" class="mb20">
 							<el-form-item label="是否固定">
-								<el-radio-group v-model="state.ruleForm.meta.isAffix">
+								<el-radio-group v-model="state.formData.meta.isAffix">
 									<el-radio :label="true">固定</el-radio>
 									<el-radio :label="false">不固定</el-radio>
 								</el-radio-group>
@@ -118,7 +118,7 @@
 						</el-col>
 						<el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12" class="mb20">
 							<el-form-item label="是否外链">
-								<el-radio-group v-model="state.ruleForm.isLink" :disabled="state.ruleForm.meta.isIframe">
+								<el-radio-group v-model="state.formData.isLink" :disabled="state.formData.meta.isIframe">
 									<el-radio :label="true">是</el-radio>
 									<el-radio :label="false">否</el-radio>
 								</el-radio-group>
@@ -126,7 +126,7 @@
 						</el-col>
 						<el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12" class="mb20">
 							<el-form-item label="是否内嵌">
-								<el-radio-group v-model="state.ruleForm.meta.isIframe" @change="onSelectIframeChange">
+								<el-radio-group v-model="state.formData.meta.isIframe" @change="onSelectIframeChange">
 									<el-radio :label="true">是</el-radio>
 									<el-radio :label="false">否</el-radio>
 								</el-radio-group>
@@ -164,7 +164,7 @@ const stores = useRoutesList();
 const { routesList } = storeToRefs(stores);
 const state = reactive({
 	// 参数请参考 `/src/router/route.ts` 中的 `dynamicRoutes` 路由菜单格式
-	ruleForm: {
+	formData: {
 		menuSuperior: [], // 上级菜单
 		menuType: 'menu', // 菜单类型
 		name: '', // 路由名称
@@ -214,7 +214,7 @@ const openDialog = (type: string, row?: any) => {
 			.match(/\'(.+)\'/g)
 			?.join('')
 			.replace(/\'/g, '');
-		state.ruleForm = row;
+		state.formData = row;
 		state.dialog.title = '修改菜单';
 		state.dialog.submitTxt = '修 改';
 	} else {
@@ -234,8 +234,8 @@ const closeDialog = () => {
 };
 // 是否内嵌下拉改变
 const onSelectIframeChange = () => {
-	if (state.ruleForm.meta.isIframe) state.ruleForm.isLink = true;
-	else state.ruleForm.isLink = false;
+	if (state.formData.meta.isIframe) state.formData.isLink = true;
+	else state.formData.isLink = false;
 };
 // 取消
 const onCancel = () => {
